@@ -8,34 +8,35 @@
 </head>
 <body>
 
-
-	<!--*****Hooking Up Knockout-->
-
-	<!-- This is a *view* - HTML markup that defines the appearance of your UI -->
-	<!-- <p>First name: <strong data-bind="text: firstName"></strong></p>
-	<p>Last name: <strong data-bind="text: lastName"></strong></p> -->
-	<!--*****Hooking Up Knockout-->
-	
-
-	<!--Add buttons to turn on and off the extra info-->
 	<div class="container">
 		<div class="options-box">
 			<h1> Ice Cream Shops in Rockport, MA </h1>
-			<div>
-				<input id="show-listings" type="button" value="Show Listings">
-				<input id="hide-listings" type="button" value="Hide Listings">
-			</div>
-			<!-- Sample autosuggetbox-->
-		  	<label>Sites<input id="input1" type="text" list="datalist1" /></label>
-			<datalist id="datalist1">
-				<option value="http://www.google.com/" label="Google"></option>
-				<option value="http://www.reddit.com/" label="Reddit"></option>
-			</datalist>
+
+			<label> Find: <input id='filter_keyword' data-bind='value: filter, valueUpdate: "afterkeydown"' /> </label>
+			 
+			<p>Your locations:</p>
+			<ul data-bind="foreach: filteredLocations">
+				<!--
+					* Knockout syntax *
+					
+					For each location in filteredLocations,
+					displays: location.title()
+				-->
+			    <li>
+			        <span data-bind="text: title" />
+			    </li> 
+			</ul>
+
 		</div>
-	<!--Asynchronously load the google maps-->
+		
+		<!--Asynchronously load the google maps-->
 		<div id="map"></div>
 	</div>
-	<script src="js/app.js"></script>
+
+	<script src="js/utils.js"></script>
+	<script src="js/model.js"></script>
+	<script src="js/app.js"></script>	
+
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZSj8uKhJNLeCtoyghNQYgoyTc2ynsqKQ&v=3&callback=initMap">
 	</script>
 </body>
