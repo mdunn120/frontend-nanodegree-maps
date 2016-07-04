@@ -43,7 +43,7 @@ function populateInfoWindow(marker, infowindow) {
 	}
 }
 
-
+//make Markers for the map 
 function makeMarkers() {
 	// The following group uses the location array to create an array of markers
 	locations = viewModel.filteredLocations();
