@@ -1,5 +1,11 @@
 // JS for my maps project 
 
+// Foursquare stuff
+//Special codes to identify that this is me
+var foursquare_api_endpoint = 'https://api.foursquare.com/v2/venues/';
+var client_id = 'O32K1FZZ3SOXYJLQ1QFCJJTITDJDGBDS5CYASY3N5GWEEMBY';
+var client_secret = 'BHSQA10YVVPFR3SDT5CVEX24KBR5URUHNH2NCZKMH43UHGQZ';
+
 // JS for the map
 var map;
 var largeInfoWindow;
@@ -18,11 +24,9 @@ function initMap() {
 
 	largeInfoWindow = new google.maps.InfoWindow();
 
-	// On initialization, show the listings and refresh listings 
+	// On initialization, show the listings
 	updateListings();
 
-	//Update listings on keyup - event listener 
-	//??
 	document.getElementById('filter_keyword').addEventListener('keyup', updateListings);
 }
 
@@ -34,8 +38,32 @@ function populateInfoWindow(marker, infowindow) {
 	//check to make sure the infowindow is not already opened on this marker
 	if (infowindow.marker != marker) {
 		infowindow.marker = marker;
-		infowindow.setContent('<div>' + marker.title + '</div');
-		infowindow.open(map, marker);
+
+		var foursquare_id = marker.foursquare_id;
+		var foursquare_url = foursquare_api_endpoint + foursquare_id +
+			'?client_id=' + client_id +
+			'&client_secret=' + client_secret +
+			'&v=' + '20160709';
+
+		$.getJSON(foursquare_url, function(data) {
+			// If the ajax call to foursquare_url is successful,
+			// display the venue data
+
+			// (1) Retreive the venue data
+			var venue_data = data.response.venue;
+
+			// (2) Display the marker
+			var content = '<div>' +
+			'Title: ' + venue_data.name + '<br/>' +
+			'Address: ' + venue_data.location.formattedAddress + '<br/>' +
+			'Category: ' + venue_data.categories[0].name + '<br/>' + 
+			'Price: ' + venue_data.attributes.groups[0].summary + '<br/>' + 
+			'Location: ' + venue_data.location.lat + ', ' + venue_data.location.lng + '<br/>' +
+			'</div>'
+			infowindow.setContent( content );
+			infowindow.open(map, marker);
+		}
+
 		//Make sure the marker property is cleared if the infoWindow is closed
 		infowindow.addListener('closeclick', function(){
 			infowindow.marker = null;
@@ -43,7 +71,7 @@ function populateInfoWindow(marker, infowindow) {
 	}
 }
 
-//make Markers for the map 
+
 function makeMarkers() {
 	// The following group uses the location array to create an array of markers
 	locations = viewModel.filteredLocations();
@@ -52,6 +80,7 @@ function makeMarkers() {
 		//Get the position from the location array.
 		var position = locations[i].position();
 		var title = locations[i].title();
+		var foursquare_id = locations[i].foursquare_id();
 		
 		//Create a marker per location, and put into markers array
 		var marker = new google.maps.Marker({
@@ -59,7 +88,8 @@ function makeMarkers() {
 			position: position,
 			title: title,
 			animation: google.maps.Animation.DROP,
-			id: i
+			id: i,
+			foursquare_id: foursquare_id
 		});
 
 		//Push the marker to our array of markers
