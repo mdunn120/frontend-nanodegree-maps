@@ -31,15 +31,17 @@ function initMap() {
 }
 
 
-// This function populates the infowindow when the marker is clicked. We'll only allow
+// This function populates the infowindow when the marker or item in the list is clicked. I only allow
 // one infoWindow which will open at the marker that is clicked, and populate based
-// on that markers position
+// on that markers position and the foursquare id
 function populateInfoWindow(marker, infowindow) {
 	//check to make sure the infowindow is not already opened on this marker
 	if (infowindow.marker != marker) {
 		infowindow.marker = marker;
 
 		var foursquare_id = marker.foursquare_id;
+
+		//Creates the URL that I will use to call into Foursquare to get the JSON objects about my locations
 		var foursquare_url = foursquare_api_endpoint + foursquare_id +
 			'?client_id=' + client_id +
 			'&client_secret=' + client_secret +
@@ -49,20 +51,25 @@ function populateInfoWindow(marker, infowindow) {
 			// If the ajax call to foursquare_url is successful,
 			// display the venue data
 
-			// (1) Retreive the venue data
+			// (1) Retreive the venue data from FourSquare and put it in venue_data
 			var venue_data = data.response.venue;
 
-			// (2) Display the marker
+			// (2) Display the marker with all the desired info from the JSON object 
 			var content = '<div>' +
 			'Title: ' + venue_data.name + '<br/>' +
 			'Address: ' + venue_data.location.formattedAddress + '<br/>' +
 			'Category: ' + venue_data.categories[0].name + '<br/>' + 
 			'Price: ' + venue_data.attributes.groups[0].summary + '<br/>' + 
 			'Location: ' + venue_data.location.lat + ', ' + venue_data.location.lng + '<br/>' +
+			'Info From FourSquare' +
 			'</div>'
 			infowindow.setContent( content );
 			infowindow.open(map, marker);
-		})
+
+		//Error Handling if the content from Foursquare is unavailable show an alert with the error message. Tested by turning off the internet.
+		}).error(function(e){
+			alert('This content is unavailable. Please try again later');
+		});
 
 		//Make sure the marker property is cleared if the infoWindow is closed
 		infowindow.addListener('closeclick', function(){

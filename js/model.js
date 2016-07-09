@@ -35,7 +35,7 @@ var ViewModel = function( locations ) {
 
 
 // This array contains ice cream store info in rockport, ma. This info will be displayed to the user
-// Title, latitude, longitude, FoursquareID used to get the JSON object from the FourSquare APIs)
+// Title, latitude, longitude (used by google maps), FoursquareID used to get the JSON object from the FourSquare APIs)
 var locations = [
 		new Location('The Ice Cream Store', {lat: 42.659296, lng: -70.616589}, '4c13f94e7f7f2d7f041ae068'),
 		new Location('Mollys Sweet Tooth', {lat: 42.658429, lng: -70.616801}, '51c89698498edaa23650d5bc'),
