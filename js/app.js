@@ -62,7 +62,7 @@ function populateInfoWindow(marker, infowindow) {
 			'</div>'
 			infowindow.setContent( content );
 			infowindow.open(map, marker);
-		}
+		})
 
 		//Make sure the marker property is cleared if the infoWindow is closed
 		infowindow.addListener('closeclick', function(){
