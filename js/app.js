@@ -1,4 +1,4 @@
-// JS for my maps project 
+// JS for my maps project. Main app logic
 
 // Foursquare stuff
 //Special codes to identify that this is me

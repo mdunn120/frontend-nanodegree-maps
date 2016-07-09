@@ -1,5 +1,5 @@
 
-// Model for Location
+// Model for Location using Knockport and foursquare 
 function Location(title, position, foursquare_id) {
     this.title = ko.observable(title);
     this.position = ko.observable(position);
