@@ -161,3 +161,11 @@ function updateListings() {
 	// Display them
 	showListings();
 }
+
+// A helper function to retrieve a corresponding marker
+// from a filtered list index
+function get_marker_from_filtered_list_index (filtered_list_index) {
+	locations = viewModel.filteredLocations();
+	return markers[ locationToMarkerIDs[ locations[filtered_list_index].title() ] ]
+}
+

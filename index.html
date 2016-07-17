@@ -12,7 +12,7 @@
 <body>
 
 	<div class="container" >
-		<div class="options-box" style="panel">
+		<div class="options-box">
 			<h1> Ice Cream Shops in Rockport, MA </h1>
 
 			<!-- Input field with the field functionality from ko -->
@@ -29,7 +29,7 @@
 					displays: location.title()
 				-->
 			    <li>
-			        <span data-bind="text: title, click: function() { populateInfoWindow( markers[$index()], largeInfoWindow) }"  />
+			        <span data-bind="text: title, click: function() { populateInfoWindow( get_marker_from_filtered_list_index( $index()), largeInfoWindow) }"  />
 			    </li> 
 			</ul>
 
