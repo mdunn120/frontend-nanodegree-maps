@@ -107,7 +107,10 @@ function makeMarkers() {
 
 		//create an onClick event to open an infowindow at each marker
 		marker.addListener('click', function() {
+			marker.animation = google.maps.Animation.DROP;
 			populateInfoWindow(this, largeInfoWindow);
+			//When the markers get clicked they need to bounce too
+
 		});
 	}
 }

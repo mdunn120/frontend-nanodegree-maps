@@ -27,10 +27,15 @@ var ViewModel = function( locations ) {
 	            return stringStartsWith( location.title().toLowerCase(), filter );
 	        });
 	    }
+
+	//I need to add this line to this function
+	//marker.setVisible(true); // or false
 	}.bind(this);
 
 	// Dependent Observable variable for filtered locations
 	this.filteredLocations = ko.dependentObservable( this.filterLocations );
+
+
 };
 
 
