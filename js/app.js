@@ -11,8 +11,10 @@ var map;
 var largeInfoWindow;
 
 // Creates a new blank array for the markers
+var locations;
 var markers = [];
-
+//Hash map between the locations and the markers 
+var locationToMarkerIDs = {}
 
 function initMap() {
 	// Constructor creates a new map - only center and zoom are required.
@@ -24,10 +26,10 @@ function initMap() {
 
 	largeInfoWindow = new google.maps.InfoWindow();
 
-	// On initialization, show the listings
-	updateListings();
+	// Then create markers based on the filtered list
+	makeMarkers();	
 
-	document.getElementById('filter_keyword').addEventListener('keyup', updateListings);
+	$('#filter_keyword').keyup( updateListings );
 }
 
 
@@ -75,6 +77,9 @@ function populateInfoWindow(marker, infowindow) {
 		infowindow.addListener('closeclick', function(){
 			infowindow.marker = null;
 		});
+
+		marker.setAnimation(google.maps.Animation.BOUNCE);
+	    setTimeout( function() { marker.setAnimation(null); }, 800);
 	}
 }
 
@@ -82,6 +87,10 @@ function populateInfoWindow(marker, infowindow) {
 function makeMarkers() {
 	// The following group uses the location array to create an array of markers
 	locations = viewModel.filteredLocations();
+
+
+	// Extend the boundaries of the map for each marker and display the marker
+	var bounds = new google.maps.LatLngBounds();
 
 	for(var i=0; i < locations.length; i++){
 		//Get the position from the location array.
@@ -102,38 +111,45 @@ function makeMarkers() {
 		//Push the marker to our array of markers
 		markers.push(marker);
 
+		// Link the location name to the marker so we can refer to it later
+		locationToMarkerIDs[title] = marker.id;
+
+
 		//extend the boundaries of the map for each marker
 		//bounds.extend(marker.position);
 
 		//create an onClick event to open an infowindow at each marker
 		marker.addListener('click', function() {
-			marker.animation = google.maps.Animation.DROP;
+			//marker.animation = google.maps.Animation.DROP;
 			populateInfoWindow(this, largeInfoWindow);
 			//When the markers get clicked they need to bounce too
 
 		});
+
+		marker.setMap(map);
+		bounds.extend(marker.position);	
 	}
+	map.fitBounds(bounds);
 }
 
 
 // This function will loop through the markers array and display them all.
 function showListings() {
-	var bounds = new google.maps.LatLngBounds();
-	// Extend the boundaries of the map for each marker and display the marker
-	for (var i = 0; i < markers.length; i++) {
-	  markers[i].setMap(map);
-	  bounds.extend(markers[i].position);
+	locations = viewModel.filteredLocations();
+	
+	for (var i = 0; i < locations.length; i++) {
+		title = locations[i].title();	
+		marker = markers[ locationToMarkerIDs[title] ];
+		marker.setVisible(true);
 	}
-	map.fitBounds(bounds);
 }
 
 
 // This function will loop through the listings and hide them all.
 function hideListings() {
 	for (var i = 0; i < markers.length; i++) {
-	  markers[i].setMap(null);
+	  markers[i].setVisible(false);
 	}
-	markers = [];
 }
 
 
@@ -141,9 +157,6 @@ function hideListings() {
 function updateListings() {
 	// First clear the markers if there were any
 	hideListings();
-
-	// Then create markers based on the filtered list
-	makeMarkers();
 
 	// Display them
 	showListings();
