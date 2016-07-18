@@ -87,7 +87,8 @@ function populateInfoWindow(marker, infowindow) {
 
 function makeMarkers() {
 	// The following group uses the location array to create an array of markers
-	locations = viewModel.filteredLocations();
+	//locations = viewModel.filteredLocations();
+
 
 
 	// Extend the boundaries of the map for each marker and display the marker
@@ -98,6 +99,7 @@ function makeMarkers() {
 		var position = locations[i].position();
 		var title = locations[i].title();
 		var foursquare_id = locations[i].foursquare_id();
+		locations[i].marker = marker;
 		
 		//Create a marker per location, and put into markers array
 		var marker = new google.maps.Marker({
