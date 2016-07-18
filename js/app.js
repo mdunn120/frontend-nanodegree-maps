@@ -29,7 +29,8 @@ function initMap() {
 	// Then create markers based on the filtered list
 	makeMarkers();	
 
-	$('#filter_keyword').keyup( updateListings );
+	//$('#filter_keyword').keyup( updateListings );
+	//data-bind="event: {keyup: updateListings}";
 }
 
 
@@ -169,3 +170,6 @@ function get_marker_from_filtered_list_index (filtered_list_index) {
 	return markers[ locationToMarkerIDs[ locations[filtered_list_index].title() ] ]
 }
 
+function googleError(){
+	alert("Google loading failed")
+}

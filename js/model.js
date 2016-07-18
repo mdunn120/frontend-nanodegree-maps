@@ -24,7 +24,7 @@ var ViewModel = function( locations ) {
 	    } else {
 	    	// Otherwise, filter out the locations that do not start with the filter string
 	        return ko.utils.arrayFilter( this.locations(), function(location) {
-	            return stringStartsWith( location.title().toLowerCase(), filter );
+	            return stringContains( location.title().toLowerCase(), filter );
 	        });
 	    }
 

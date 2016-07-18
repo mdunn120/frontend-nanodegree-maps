@@ -1,7 +1,7 @@
 //used in the ViewModel to help figure out what the string starts with in the search function. 
-var stringStartsWith = function (string, startsWith) {          
+var stringContains = function (string, contain_string) {          
     string = string || "";
-    if (startsWith.length > string.length)
+    if (contain_string.length > string.length)
         return false;
-    return string.substring(0, startsWith.length) === startsWith;
+    return string.indexOf( contain_string ) != -1;
 };
