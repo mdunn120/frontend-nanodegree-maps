@@ -6,7 +6,6 @@ function Location(title, position, foursquare_id) {
     this.foursquare_id = ko.observable(foursquare_id);
 }
 
-
 // View Model class
 var ViewModel = function( locations ) {
     this.locations = ko.observableArray( locations );
@@ -35,9 +34,7 @@ var ViewModel = function( locations ) {
 	// Dependent Observable variable for filtered locations
 	this.filteredLocations = ko.dependentObservable( this.filterLocations );
 
-
 };
-
 
 // This array contains ice cream store info in rockport, ma. This info will be displayed to the user
 // Title, latitude, longitude (used by google maps), FoursquareID used to get the JSON object from the FourSquare APIs)

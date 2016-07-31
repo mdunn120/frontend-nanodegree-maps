@@ -1,4 +1,4 @@
-frontend-nanodegree-maps project
+Frontend Nanodegree Maps Project
 ===============================
 
 Installation

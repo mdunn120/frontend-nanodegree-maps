@@ -1,5 +1,4 @@
 // JS for my maps project. Main app logic
-
 // Foursquare stuff
 //Special codes to identify that this is me
 var foursquare_api_endpoint = 'https://api.foursquare.com/v2/venues/';
@@ -87,9 +86,6 @@ function populateInfoWindow(marker, infowindow) {
 
 function makeMarkers() {
 	// The following group uses the location array to create an array of markers
-	//locations = viewModel.filteredLocations();
-
-
 
 	// Extend the boundaries of the map for each marker and display the marker
 	var bounds = new google.maps.LatLngBounds();
@@ -146,7 +142,6 @@ function showListings() {
 		marker.setVisible(true);
 	}
 }
-
 
 // This function will loop through the listings and hide them all.
 function hideListings() {
