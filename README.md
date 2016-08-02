@@ -1,5 +1,8 @@
 Frontend Nanodegree Maps Project
 ===============================
+Summary
+-------
+This project helps you find ice cream stores in Rockport MA. This project uses an MVVM pattern with google maps, Knockout, Jquery and Foursquare APIs. 
 
 Installation
 ------------
